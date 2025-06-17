@@ -1,24 +1,33 @@
-# ARM64 base image for Jetson
-FROM arm64v8/python:3.8-slim
+# Use multi-platform base image
+FROM python:3.8-slim
 
-# Install dependencies
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Install MLflow
-RUN pip install --no-cache-dir \
-    mlflow==2.13.1 \
-    pyarrow
+# Set working directory
+WORKDIR /app
 
-# Create storage directories
-RUN mkdir -p /mlflow/{artifacts,db}
+# Copy requirements first for better caching
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Create necessary directories
+RUN mkdir -p /mlflow/data/artifacts
+
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 # Expose MLflow port
 EXPOSE 5000
 
-# Startup command
-CMD ["mlflow", "server", \
-     "--backend-store-uri", "sqlite:////mlflow/db/mlflow.db", \
-     "--default-artifact-root", "file:///mlflow/artifacts", \
-     "--host", "0.0.0.0"]
+# Set environment variables
+ENV MLFLOW_TRACKING_URI=sqlite:////mlflow/data/mlflow.db
+ENV MLFLOW_DEFAULT_ARTIFACT_ROOT=file:///mlflow/data/artifacts
+
+# Use entrypoint script
+ENTRYPOINT ["/entrypoint.sh"]
