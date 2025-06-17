@@ -44,34 +44,8 @@ The server is configured through environment variables in `docker-compose.yml`:
 - `MLFLOW_TRACKING_URI`: Database connection string (default: SQLite)
 - `MLFLOW_DEFAULT_ARTIFACT_ROOT`: Artifact storage location
 
+**Note:** The Dockerfile explicitly installs `sqlite3` to ensure proper database initialization.
+
 ## Data Persistence
 
-All data is stored in the `./data` directory:
-- `./data/mlflow.db`: SQLite database
-- `./data/artifacts`: MLflow artifacts
-
-## Accessing the Server
-
-- Local access: `http://localhost:5000`
-- Network access: `http://<your-ip>:5000`
-
-## Stopping the Server
-
-```bash
-docker-compose down
-```
-
-## Troubleshooting
-
-1. If you can't access the server:
-   - Check if the container is running: `docker ps`
-   - Check container logs: `docker logs mlflow_server`
-   - Ensure port 5000 is not in use by another application
-
-2. If data persistence issues occur:
-   - Check permissions on the `./data` directory
-   - Ensure the directory exists and is writable
-
-## License
-
-MIT
+All data is stored in the `

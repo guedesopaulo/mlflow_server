@@ -4,6 +4,7 @@ FROM python:3.8-slim
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
+    sqlite3 \
     && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
