@@ -1,8 +1,9 @@
 #!/bin/bash
 set -e
 
-# Create data directory if it doesn't exist
+# Create necessary directories
 mkdir -p /mlflow/data/artifacts
+mkdir -p /mlflow/runs
 
 # Initialize SQLite DB if not exists
 if [ ! -f "/mlflow/data/mlflow.db" ]; then
@@ -11,7 +12,7 @@ if [ ! -f "/mlflow/data/mlflow.db" ]; then
 fi
 
 # Set permissions
-chmod -R 777 /mlflow/data
+chmod -R 777 /mlflow
 
 echo "Starting MLflow server..."
 exec mlflow server \
