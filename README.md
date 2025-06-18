@@ -37,6 +37,10 @@ docker-compose up -d
 
 The MLflow server will be available at `http://localhost:5000` or `http://<your-ip>:5000` from other machines on your network.
 
+## Example: MNIST MLflow Training
+
+See [example/README.md](example/README.md) for instructions on running the MNIST MLflow example script.
+
 ## Configuration
 
 The server is configured through environment variables in `docker-compose.yml`:
@@ -48,4 +52,32 @@ The server is configured through environment variables in `docker-compose.yml`:
 
 ## Data Persistence
 
-All data is stored in the `
+All data is stored in the `./data` directory:
+- `./data/mlflow.db`: SQLite database
+- `./data/artifacts`: MLflow artifacts
+
+## Accessing the Server
+
+- Local access: `http://localhost:5000`
+- Network access: `http://<your-ip>:5000`
+
+## Stopping the Server
+
+```bash
+docker-compose down
+```
+
+## Troubleshooting
+
+1. If you can't access the server:
+   - Check if the container is running: `docker ps`
+   - Check container logs: `docker logs mlflow_server`
+   - Ensure port 5000 is not in use by another application
+
+2. If data persistence issues occur:
+   - Check permissions on the `./data` directory
+   - Ensure the directory exists and is writable
+
+## License
+
+MIT
