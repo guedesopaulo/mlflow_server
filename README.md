@@ -21,7 +21,7 @@ A cross-platform MLflow server setup that works on both Jetson Nano (Ubuntu 18.0
 
 1. Clone this repository:
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/guedesopaulo/mlflow_server.git
 cd mlflow_server
 ```
 
